@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090d18">
+<meta name="description" content="SM AI — create images from your imagination.">
+<title>SM AI — AI Image Generator</title>
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#080c17;--surface:#111a2b;--surface-2:#0c1423;--line:#263650;
+  --text:#f5f7ff;--muted:#a7b2c8;--purple:#9a83ff;--cyan:#6bdcff;
+  --success:#8ce6b2;--danger:#ff9a9a;--radius:20px;
+}
+*{box-sizing:border-box}
+html{min-height:100%;background:var(--bg);scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;min-height:100svh;color:var(--text);
+  background:radial-gradient(ellipse at 50% -22%,#28315b 0,transparent 48%),var(--bg);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+button,textarea,select,input{font:inherit}
+button,a,select{-webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible,textarea:focus-visible,select:focus-visible,input:focus-visible{
+  outline:2px solid var(--cyan);outline-offset:3px
+}
+.topbar{
+  min-height:68px;padding:12px max(4%,calc((100% - 1120px)/2));
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  border-bottom:1px solid #26334b;background:rgba(9,15,29,.94);
+}
+.brand{font-size:21px;font-weight:900;letter-spacing:1.4px;white-space:nowrap}
+.brand span{color:var(--purple)}
+.free-tag{font-size:11px;letter-spacing:.5px;color:#a8f1cb;border:1px solid #285b49;padding:7px 11px;border-radius:30px;white-space:nowrap}
+main{width:min(1050px,92%);margin:clamp(30px,6vw,62px) auto 64px}
+.hero{text-align:center;margin:0 auto 30px;max-width:760px}
+.hero h1{font-size:clamp(34px,6vw,58px);line-height:1.08;letter-spacing:-1.8px;margin:0 0 13px}
+.gradient{background:linear-gradient(90deg,#b7a5ff,#6bdcff);background-clip:text;-webkit-background-clip:text;color:transparent}
+.hero p{color:var(--muted);line-height:1.7;margin:0;font-size:clamp(14px,2vw,16px)}
+.panel{
+  background:linear-gradient(145deg,rgba(20,30,49,.98),rgba(13,21,35,.98));
+  border:1px solid var(--line);border-radius:var(--radius);
+  padding:clamp(17px,3.5vw,30px);box-shadow:0 22px 70px rgba(0,0,0,.28);
+}
+.field-label{display:block;font-size:14px;font-weight:750;margin:0 0 10px}
+textarea,select,input{
+  width:100%;min-width:0;color:var(--text);background:var(--surface-2);
+  border:1px solid #30405c;border-radius:12px;padding:13px 14px;
+}
+textarea{min-height:132px;resize:vertical;line-height:1.55}
+textarea::placeholder,input::placeholder{color:#77859d}
+textarea:focus,select:focus,input:focus{border-color:var(--purple);outline:none}
+.helper{font-size:12px;color:var(--muted);margin-top:7px}
+.options-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:15px;margin-top:19px}
+.primary{
+  display:block;width:100%;min-height:52px;margin-top:22px;padding:14px 18px;
+  border:0;border-radius:13px;color:white;font-weight:800;font-size:15px;
+  background:linear-gradient(100deg,#8068ff,#438fe8);cursor:pointer;
+}
+.primary:disabled{opacity:.58;cursor:not-allowed}
+.status{min-height:25px;margin:16px 0 0;text-align:center;color:var(--muted);font-size:13px;line-height:1.5}
+.status.error{color:var(--danger)}.status.ok{color:var(--success)}
+.output{display:none;margin-top:22px}.output.visible{display:block}
+.output img{
+  display:block;width:100%;height:auto;max-height:720px;object-fit:contain;
+  background:#070b13;border:1px solid var(--line);border-radius:14px;
+}
+.action-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:13px}
+.action-link,.secondary{
+  display:inline-flex;align-items:center;justify-content:center;min-height:43px;
+  border:0;border-radius:10px;padding:10px 15px;background:#26344e;color:#fff;
+  text-decoration:none;font-weight:750;font-size:13px;cursor:pointer;
+}
+.history{margin-top:26px}.history[hidden]{display:none}
+.history-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.history-head h2{font-size:17px;margin:0}.history-head span{font-size:11px;color:var(--muted)}
+.history-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:10px}
+.history-grid button{padding:0;border:1px solid var(--line);background:transparent;border-radius:11px;overflow:hidden;cursor:pointer}
+.history-grid img{display:block;width:100%;aspect-ratio:1;object-fit:cover}
+.notice{margin-top:20px;padding:13px 15px;border:1px solid #394766;border-radius:12px;color:var(--muted);font-size:12px;line-height:1.65}
+.notice strong{color:#e5e9f4}
+footer{padding:24px 16px calc(24px + env(safe-area-inset-bottom));border-top:1px solid #202b40;text-align:center;color:#8996ad;font-size:12px;line-height:1.8}
+footer strong{color:#dfe5f4;letter-spacing:.2px}
+@media(max-width:640px){
+  .topbar{min-height:60px;padding:10px 4%}.brand{font-size:18px}
+  main{width:92%;margin:34px auto 45px}
+  .options-grid{grid-template-columns:1fr;gap:14px}
+  .hero h1{letter-spacing:-1px}
+  .history-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">SM <span>AI</span></div>
+  <div class="free-tag">● FREE-TIER AI</div>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Imagine it. <span class="gradient">Create it.</span></h1>
+    <p>Turn your words into beautiful images with SM AI.<br>Describe your idea and choose an art style to begin.</p>
+  </section>
+
+  <section class="panel" aria-label="Image generator">
+    <label class="field-label" for="prompt">Describe your image</label>
+    <textarea id="prompt" maxlength="1800" placeholder="A tiny astronaut exploring a glowing garden on the moon, magical lighting, cinematic composition..."></textarea>
+    <div class="helper">Write a clear description. Maximum 1,800 characters.</div>
+
+    <div class="options-grid">
+      <div>
+        <label class="field-label" for="style">Art style</label>
+        <select id="style">
+          <option value="realistic">Photorealistic</option>
+          <option value="anime">Anime</option>
+          <option value="3d">3D Render</option>
+          <option value="cartoon">Cartoon</option>
+          <option value="digital">Digital Art</option>
+          <option value="watercolor">Watercolor</option>
+          <option value="fantasy">Fantasy</option>
+        </select>
+      </div>
+      <div>
+        <label class="field-label" for="negative">Things to avoid (optional)</label>
+        <input id="negative" maxlength="300" placeholder="blurry, low quality">
+      </div>
+    </div>
+
+    <button class="primary" id="generate" type="button">✦ Generate Image</button>
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+
+    <section class="output" id="output" aria-label="Generated image">
+      <img id="resultImage" alt="Your AI-generated artwork">
+      <div class="action-row">
+        <a class="action-link" id="download" download="sm-ai-image.jpg">↓ Download image</a>
+        <button class="secondary" id="newImage" type="button">Create another</button>
+      </div>
+    </section>
+  </section>
+
+  <section class="history" id="historySection" hidden>
+    <div class="history-head">
+      <h2>Recent creations</h2>
+      <span>Saved in this browser</span>
+    </div>
+    <div class="history-grid" id="history"></div>
+  </section>
+
+  <div class="notice">
+    <strong>Free-tier notice:</strong> SM AI uses Cloudflare Workers AI's free daily allowance.
+    It is not unlimited. If the allowance or provider capacity is exhausted, image generation
+    may pause until the daily reset. SM AI does not automatically switch to a paid service.
+  </div>
+</main>
+
+<footer>
+  SM AI · Imagine Anything. Create with AI.<br>
+  <strong>Made By MD AWAL SHEIKH</strong>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const button = $("generate");
+  const statusBox = $("status");
+  const output = $("output");
+  const resultImage = $("resultImage");
+  const HISTORY_KEY = "sm-ai-history-v2";
+  let historyItems = [];
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
+    if (Array.isArray(saved)) historyItems = saved.filter(x => typeof x === "string").slice(0, 8);
+  } catch (_) {}
+
+  function setStatus(message, type = "") {
+    statusBox.textContent = message;
+    statusBox.className = "status" + (type ? " " + type : "");
+  }
+
+  function showImage(src) {
+    resultImage.src = src;
+    $("download").href = src;
+    output.classList.add("visible");
+  }
+
+  function renderHistory() {
+    const section = $("historySection");
+    const grid = $("history");
+    grid.replaceChildren();
+    section.hidden = historyItems.length === 0;
+
+    historyItems.forEach(src => {
+      const item = document.createElement("button");
+      item.type = "button";
+      item.setAttribute("aria-label", "Open previous generated image");
+      const image = document.createElement("img");
+      image.src = src;
+      image.alt = "Previous SM AI creation";
+      image.loading = "lazy";
+      item.appendChild(image);
+      item.addEventListener("click", () => {
+        showImage(src);
+        output.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      });
+      grid.appendChild(item);
+    });
+  }
+
+  renderHistory();
+
+  button.addEventListener("click", async () => {
+    const prompt = $("prompt").value.trim();
+    if (prompt.length < 3) {
+      setStatus("Please enter a more detailed prompt.", "error");
+      $("prompt").focus();
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Creating image…";
+    output.classList.remove("visible");
+    setStatus("Connecting to SM AI. Image generation may take a little time.");
+
+    try {
+      const response = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          prompt,
+          style: $("style").value,
+          negativePrompt: $("negative").value
+        })
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || "Image generation failed.");
+      if (!data.image) throw new Error("The AI model did not return an image.");
+
+      showImage(data.image);
+      setStatus("Your image is ready!", "ok");
+
+      historyItems.unshift(data.image);
+      historyItems = historyItems.slice(0, 8);
+      try { localStorage.setItem(HISTORY_KEY, JSON.stringify(historyItems)); } catch (_) {}
+      renderHistory();
+    } catch (error) {
+      setStatus(error.message || "Something went wrong. Please try again.", "error");
+    } finally {
+      button.disabled = false;
+      button.textContent = "✦ Generate Image";
+    }
+  });
+
+  $("newImage").addEventListener("click", () => {
+    $("prompt").focus();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+})();
+</script>
+</body>
+</html>
