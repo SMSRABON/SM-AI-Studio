@@ -1,68 +1,238 @@
-# SM AI — Responsive AI Image Generator
+# 🚀 SM AI Studio
 
-A responsive text-to-image website powered by Cloudflare Workers AI and FLUX.1 Schnell.
+### Turn Your Imagination Into Images with AI
 
-## Highlights
-- Responsive layout for phones, tablets, laptops and desktop browsers
-- Stable interface with no decorative blinking/pulsing animations
-- Reduced-motion accessibility support
-- Text-to-image with seven prompt styles
-- Preview, download and browser-local recent history
-- Server-side Workers AI binding; no API key in frontend
-- Free-tier-only setup; no paid fallback configured
-- Footer credit: **Made By MD AWAL SHEIKH**
+**SM AI Studio** is a free AI-powered image generation web application built with Cloudflare Workers AI and the FLUX.1 Schnell model.
 
-## Free-tier note
-The Cloudflare Workers AI Free plan has a daily Neurons allowance. Usage is not unlimited. If it is exhausted, generation may pause until the allowance resets. Do not enable paid billing if you want to keep the project free.
+Simply enter a text prompt and generate AI images in seconds. The application features a clean, responsive interface and a simple daily credit system.
 
-Pricing: https://developers.cloudflare.com/workers-ai/platform/pricing/
-Model: https://developers.cloudflare.com/workers-ai/models/flux-1-schnell/
+<p align="center">
+  <a href="https://sm-ai-studio.mdawalsheikh.workers.dev/">
+    <strong>🌐 Live Demo — Try SM AI Studio</strong>
+  </a>
+</p>
 
-## Requirements
-- Windows 10/11, macOS or Linux
-- Node.js LTS (20+ recommended)
-- VS Code
-- Free Cloudflare account
+---
 
-## Run on your computer
-1. Extract the ZIP file.
-2. Open the extracted `SM-AI-v2` folder in VS Code.
-3. Open Terminal → New Terminal.
-4. Run `node -v` and `npm -v` to verify Node.js/npm are installed.
-5. Install dependencies:
+## 🌐 Live Application
 
-   ```bash
-   npm install
-   ```
+**Live Website:**  
+https://sm-ai-studio.mdawalsheikh.workers.dev/
 
-6. Sign in to Cloudflare:
+**GitHub Repository:**  
+https://github.com/SMSRABON/SM-AI-Studio
 
-   ```bash
-   npx wrangler login
-   ```
+---
 
-7. Start local development:
+## ✨ Features
 
-   ```bash
-   npm run dev
-   ```
+- 🎨 **AI Image Generation** — Generate images from text prompts.
+- ⚡ **Fast Generation** — Powered by Cloudflare Workers AI.
+- 🧠 **FLUX.1 Schnell Model** — Advanced AI image generation.
+- 🆓 **50 Free Daily Credits** — Daily image-generation credits per browser.
+- 📱 **Responsive Design** — Works on desktop, tablet, and mobile devices.
+- 🚀 **Serverless Architecture** — Deployed using Cloudflare Workers.
+- 🔐 **No Login Required** — Start generating without creating an account.
+- 🌍 **Global Access** — Accessible through the internet.
 
-8. Open the local URL shown by Wrangler (usually `http://localhost:8787`).
+---
 
-## Deploy free to Cloudflare
-1. Keep the same project folder open in the VS Code terminal.
-2. Run:
+## 🛠️ Technology Stack
 
-   ```bash
-   npm run deploy
-   ```
+| Technology | Purpose |
+|---|---|
+| HTML5 | Application structure |
+| CSS3 | UI design and styling |
+| JavaScript | Frontend functionality |
+| Node.js | Development environment |
+| Cloudflare Workers | Serverless backend |
+| Cloudflare Workers AI | AI inference |
+| FLUX.1 Schnell | Image generation model |
+| Wrangler | Cloudflare development and deployment |
 
-3. Wrangler will publish the Worker and print your `workers.dev` URL.
-4. Open that URL on your phone or computer to test the live website.
+---
 
-## Important
-- Workers AI uses your Cloudflare account binding; no separate image API key is needed.
-- The browser history is stored on each visitor's own device only. It is not a shared cloud gallery.
-- The simple cooldown in this starter is best-effort per Worker isolate, not strong global abuse prevention. Add Turnstile and durable rate limiting before promoting it widely.
-- This starter has no user accounts or admin dashboard.
-- Do not enable paid billing or paid add-ons if you want to stay strictly free.
+## 📸 How to Use
+
+1. Visit the [SM AI Studio website](https://sm-ai-studio.mdawalsheikh.workers.dev/).
+2. Enter your desired image prompt.
+3. Submit your prompt to generate an image.
+4. Wait for the AI model to process your request.
+5. View your generated image.
+
+---
+
+## 🎁 Free Daily Credits
+
+SM AI Studio provides **50 free image-generation credits per browser per local calendar day**.
+
+- One successful image generation uses one credit.
+- Credits reset according to the browser's local calendar date.
+- No account registration is required.
+
+**Important:** The displayed credit balance is stored in browser `localStorage`. Clearing browser data or switching browsers/devices may reset the displayed balance. This is a client-side convenience feature, not secure server-side usage enforcement.
+
+Actual AI usage remains subject to Cloudflare Workers AI account limits, availability, and applicable policies.
+
+---
+
+## 📦 Installation & Setup
+
+Want to run SM AI Studio on your local computer? Follow these steps.
+
+### Prerequisites
+
+Make sure you have:
+
+- [Node.js](https://nodejs.org/)
+- npm
+- A [Cloudflare account](https://dash.cloudflare.com/)
+- Cloudflare Workers AI access
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/SMSRABON/SM-AI-Studio.git
+```
+
+### 2. Open the Project Directory
+
+```bash
+cd SM-AI-Studio
+```
+
+### 3. Install Dependencies
+
+```bash
+npm install
+```
+
+### 4. Login to Cloudflare
+
+```bash
+npx wrangler login
+```
+
+Complete the browser authentication process.
+
+### 5. Run the Development Server
+
+```bash
+npm run dev
+```
+
+Open the following address in your browser:
+
+```text
+http://127.0.0.1:8787
+```
+
+---
+
+## 🚀 Deployment to Cloudflare Workers
+
+You can deploy your own version of SM AI Studio using Cloudflare Workers.
+
+### Step 1: Login
+
+```bash
+npx wrangler login
+```
+
+### Step 2: Deploy
+
+```bash
+npm run deploy
+```
+
+Wrangler will deploy your application to Cloudflare Workers.
+
+Make sure your Cloudflare account has Workers AI access enabled and the project configuration is correct.
+
+---
+
+## 📁 Project Structure
+
+```text
+SM-AI-Studio/
+│
+├── public/
+│   └── index.html
+│
+├── src/
+│   └── index.js
+│
+├── .gitignore
+├── package.json
+├── wrangler.jsonc
+└── README.md
+```
+
+### File Description
+
+- `public/index.html` — Frontend interface and application UI.
+- `src/index.js` — Cloudflare Worker backend and API logic.
+- `package.json` — Project metadata and npm scripts.
+- `wrangler.jsonc` — Cloudflare Workers configuration.
+- `.gitignore` — Files excluded from Git.
+- `README.md` — Project documentation.
+
+---
+
+## ⚙️ Available Commands
+
+| Command | Description |
+|---|---|
+| `npm install` | Install dependencies |
+| `npm run dev` | Start local development server |
+| `npm run deploy` | Deploy to Cloudflare Workers |
+
+---
+
+## 🔮 Future Improvements
+
+Planned features and possible enhancements:
+
+- 🖼️ Generated image gallery
+- 📥 Image download improvements
+- 🎨 Additional AI image models
+- 👤 User authentication
+- ☁️ Cloud-based image storage
+- 📊 Server-side credit management
+- ✨ More customization options
+
+---
+
+## 👨‍💻 Developer
+
+**MD Awal Sheikh**
+
+🎓 Computer Science & Engineering  
+🏛️ Northern University of Business and Technology Khulna
+
+**GitHub:** [@SMSRABON](https://github.com/SMSRABON)
+
+---
+
+## ⭐ Support the Project
+
+If you like SM AI Studio, please consider giving this repository a ⭐ Star on GitHub.
+
+Your support helps the project grow and motivates future development.
+
+**Repository:**  
+https://github.com/SMSRABON/SM-AI-Studio
+
+---
+
+## 📄 License
+
+No license has been specified yet. All rights are reserved by the project owner unless a license is added to this repository.
+
+---
+
+<p align="center">
+  <strong>🚀 SM AI Studio</strong><br>
+  <em>Turn Your Imagination Into Images.</em><br><br>
+  Made with ❤️ by MD Awal Sheikh
+</p>
